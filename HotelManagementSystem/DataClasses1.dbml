@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="hoteldb" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-5UK6RV2\SQLEXPRESS;Initial Catalog=hoteldb;Integrated Security=True" SettingsObjectName="HotelManagementSystem.Properties.Settings" SettingsPropertyName="hoteldbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="users_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="users_password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.room" Member="rooms">
+    <Type Name="room">
+      <Column Name="room_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_remarks" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="room_checkin" Member="checkins" ThisKey="room_num" OtherKey="room_num" Type="checkin" />
+    </Type>
+  </Table>
+  <Table Name="dbo.checkin" Member="checkins">
+    <Type Name="checkin">
+      <Column Name="transact_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="guest_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="checkindate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="checkoutdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="noofdays" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="adpayment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="balance" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="checkin_status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="room_checkin" Member="room" ThisKey="room_num" OtherKey="room_num" Type="room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.userlogs" Member="userlogs">
+    <Type Name="userlog">
+      <Column Name="logs_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="logss" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datetimes" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.listview_users" Method="listview_users">
+    <ElementType Name="listview_usersResult">
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="users_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.user_login" Method="user_login">
+    <Parameter Name="users_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="users_password" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="user_loginResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="users_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="users_password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.room_save" Method="room_save">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="room_type" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="room_rate" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="room_remarks" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.room_disp" Method="room_disp">
+    <ElementType Name="room_dispResult">
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_remarks" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.room_update" Method="room_update">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="room_type" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="room_rate" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.room_delete" Method="room_delete">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.room_search" Method="room_search">
+    <Parameter Name="key" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="room_searchResult">
+      <Column Name="room_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_remarks" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.checkin_room_update" Method="checkin_room_update">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="room_remarks" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.checkin_save" Method="checkin_save">
+    <Parameter Name="guest_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="checkindate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="checkoutdate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="noofdays" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="subtotal" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="adpayment" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="balance" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="checkin_status" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.checkout_disp_search" Method="checkout_disp_search">
+    <Parameter Name="key" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="checkout_disp_searchResult">
+      <Column Name="transact_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="guest_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="checkindate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="adpayment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="balance" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.checkout_disp" Method="checkout_disp">
+    <ElementType Name="checkout_dispResult">
+      <Column Name="transact_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="guest_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="checkindate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="adpayment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="balance" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.checkin_update" Method="checkin_update">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="checkoutdate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="noofdays" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="subtotal" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="balance" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="checkin_status" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.room_checkout" Method="room_checkout">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="room_remarks" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.checkout_List" Method="checkout_List">
+    <ElementType Name="checkout_ListResult">
+      <Column Name="transact_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="guest_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="checkindate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="checkoutdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_logs" Method="sp_logs">
+    <Parameter Name="logss" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.logs_display" Method="logs_display">
+    <ElementType Name="logs_displayResult">
+      <Column Name="Log_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Information" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DateLog" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.reservation_List" Method="reservation_List">
+    <ElementType Name="reservation_ListResult">
+      <Column Name="transact_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="guest_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="room_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="room_rate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="checkindate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="checkoutdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="noofdays" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="adpayment" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="balance" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.reserve_checkin" Method="reserve_checkin">
+    <Parameter Name="room_num" Type="System.Int32" DbType="Int" />
+    <Parameter Name="checkin_status" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sales_rep" Method="sales_rep">
+    <ElementType Name="sales_repResult">
+      <Column Name="DaySales" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PAYMENT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sales_report" Method="sales_report">
+    <ElementType Name="sales_reportResult">
+      <Column Name="DaySales" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PAYMENT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.save_user" Method="save_user">
+    <Parameter Name="users_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="position" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="users_password" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.user_update" Method="user_update">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="users_name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="position" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="users_password" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.user_delete" Method="user_delete">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.user_disp" Method="user_disp">
+    <ElementType Name="user_dispResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="users_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="position" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="users_password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
